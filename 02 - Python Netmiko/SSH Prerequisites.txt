@@ -1,0 +1,9 @@
+hostname R3
+ip domain name iiinetworking
+username iiipyuser1 priv 15 password Py01Pass
+crypto key generate rsa
+ip ssh version 2
+
+line vty 0 4
+transport input ssh
+login local

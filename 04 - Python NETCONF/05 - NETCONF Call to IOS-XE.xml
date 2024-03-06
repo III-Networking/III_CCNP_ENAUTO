@@ -1,0 +1,46 @@
+1 - ssh to a node
+
+ssh iiipyuser1@192.168.0.26 -p 830 netconf
+
+2 - capabilities reply
+
+<?xml version="1.0" encoding="UTF-8"?>
+<hello xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <capabilities>
+        <capability>urn:ietf:params:netconf:base:1.0</capability>
+    </capabilities>
+</hello>]]>]]>
+
+3 - show running-configuraiton 
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<rpc message-id="200" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <get-config>
+        <source>
+            <running/>
+        </source>
+    </get-config>
+</rpc>]]>]]>
+
+4 - edit interface description
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="300">
+    <edit-config>
+        <target>
+            <running/>
+        </target>
+        <config>
+            <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <interface>
+                    <GigabitEthernet>
+                        <name>2</name>
+                        <description>My Description from NETCONF message-id 300</description>
+                    </GigabitEthernet>
+                </interface>
+            </native>
+        </config>
+    </edit-config>
+</rpc>]]>]]>
+
+

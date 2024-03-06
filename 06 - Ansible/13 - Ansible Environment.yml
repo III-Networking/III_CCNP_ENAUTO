@@ -1,0 +1,55 @@
+#install ansible using python pip on linux ubuntu
+
+- sudo apt install curl
+- curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+- sudo apt-get install python3-distutils
+- sudo apt-get install python3-apt
+- python3 get-pip.py
+- python3 -m pip install ansible
+- sudo apt install ansible
+- sudo apt install python3-paramiko
+- ansible --version
+
+#download and install vscode .deb
+#cd Downloads/
+#sudo dpkg -i code
+
+#prepare a config file
+
+[defaults]
+host_key_checking: false
+inventory: RouterFile.yml
+gathering: explicit
+
+#prepare creds file for the nodes
+
+---
+RouterFile:
+  hosts:
+    R1:
+      ansible_host: 192.168.0.22
+
+all:
+  vars:
+    ansible_network_os: ios
+    ansible_user: iiipyuser1
+    ansible_password: Py01Pass
+    ansible_connection: network_cli
+
+#prepare a playbook
+
+---
+- name: "Change the hostname"
+hosts: R1
+connection: network_cli
+tasks:
+  - name: "Apply the provided configuration"
+    cisco.ios.ios_hostname:
+      config:
+        hostname: R1_AnsibleRouter
+      state: merged
+    register: output
+
+#refer to https://docs.ansible.com/ansible/latest/collections/
+
+#run the playbook using the command ansible-playbook <playbook_name.yml>
